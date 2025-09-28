@@ -72,7 +72,33 @@ Use:
 data.content   // the quote text
 data.author    // the author
 */
+const quoteBtn = document.getElementById("t3-loadQuote");
+  const quoteEl = document.getElementById("t3-quote");
+  const authorEl = document.getElementById("t3-author");
 
+  if (quoteBtn && quoteEl && authorEl) {
+    quoteBtn.addEventListener("click", async () => {
+      const prev = quoteBtn.textContent;
+      quoteBtn.disabled = true;
+      quoteBtn.textContent = "Loading…";
+      try {
+        const res = await fetch("https://dummyjson.com/quotes/random");
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        const data = await res.json();
+        const text = data?.quote ?? data?.content ?? "Stay positive and keep going.";
+        const by = data?.author ?? "Unknown";
+
+        quoteEl.textContent = `“${text}”`;
+        authorEl.textContent = `— ${by}`;
+      } catch {
+        quoteEl.textContent = "“Small progress is still progress.”";
+        authorEl.textContent = "— Unknown (fallback)";
+      } finally {
+        quoteBtn.disabled = false;
+        quoteBtn.textContent = prev;
+      }
+    });
+  }
 
 /*
 =======================================
@@ -98,3 +124,29 @@ data.main.temp      → temperature (°C)
 data.main.humidity  → humidity (%)
 data.wind.speed     → wind speed (m/s)
 */
+let btn4 = document.getElementById("t4-loadWx");
+const APIkey = "grader insert your api key here.";
+
+btn4.addEventListener("click", () => {
+      fetch("https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=e720b4ca17b718918a2f3c3c31ecc166&units=metric")
+
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("HTTP " + res.status);
+      }
+      return res.json();
+    })
+    .then((res) => {
+      let temp = document.getElementById("t4-temp");
+      let hum = document.getElementById("t4-hum");
+      let wind = document.getElementById("t4-wind");
+
+      temp.innerText = res.main.temp + " °C";
+      hum.innerText = res.main.humidity + " %";
+      wind.innerText = res.wind.speed + " m/s";
+    })
+    .catch((err) => {
+      let errBox = document.getElementById("t4-err");
+      errBox.innerText = err.message || "Could not load weather.";
+    });
+});
