@@ -19,14 +19,15 @@ inside the <p> element with id="t1-msg".
 💡 Hint:
 document.getElementById("t1-msg").innerHTML = "Hello, World!";
 */
- 
+ document.getElementById("t1-msg").innerHTML = "Hello, World!";
 
-/*  
+
+/*
 =======================================
 TODO2: Interaction Corner
 ---------------------------------------
 There is a button with id="t2-btn".
-When the button is clicked, change the text inside 
+When the button is clicked, change the text inside
 the <p> with id="t2-status" to:
     "You clicked the button!"
 
@@ -40,9 +41,12 @@ button.addEventListener("click", function () {
     // change text here
 });
 */
- 
 
-/*  
+const btn2 = document.getElementById("t2-btn");
+btn2.addEventListener("click", function () {
+  document.getElementById("t2-status").textContent = "You clicked the button!";
+});
+/*
 =======================================
 TODO3: Inspiring Quote Board
 ---------------------------------------
@@ -68,9 +72,9 @@ Use:
 data.content   // the quote text
 data.author    // the author
 */
- 
 
-/*  
+
+/*
 =======================================
 TODO4: Dammam Weather Now
 ---------------------------------------
